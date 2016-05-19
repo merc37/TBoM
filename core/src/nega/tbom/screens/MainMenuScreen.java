@@ -8,7 +8,7 @@ import nega.tbom.MainGame;
 
 public class MainMenuScreen implements Screen {
 
-	MainGame MAIN_GAME;
+	private MainGame MAIN_GAME;
 	
 	public MainMenuScreen(final MainGame game) {
 		

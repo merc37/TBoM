@@ -10,8 +10,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import nega.tbom.screens.*;
 
 public class MainGame extends Game {
-	SpriteBatch batch;
-	Texture img;
+	
+	private SpriteBatch batch;
+	private Texture img;
 	
 	Screen MENU, GAME, PAUSE;
 	

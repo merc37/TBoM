@@ -8,7 +8,7 @@ import nega.tbom.MainGame;
 
 public class PauseScreen implements Screen {
 
-	MainGame MAIN_GAME;
+	private MainGame MAIN_GAME;
 	
 	public PauseScreen(final MainGame game) {
 		
