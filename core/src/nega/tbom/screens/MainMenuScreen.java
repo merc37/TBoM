@@ -11,7 +11,7 @@ public class MainMenuScreen implements Screen {
 	private MainGame MAIN_GAME;
 	
 	public MainMenuScreen(final MainGame game) {
-		
+		MAIN_GAME = game;
 	}
 	
 	@Override

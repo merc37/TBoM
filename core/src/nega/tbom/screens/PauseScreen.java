@@ -11,7 +11,7 @@ public class PauseScreen implements Screen {
 	private MainGame MAIN_GAME;
 	
 	public PauseScreen(final MainGame game) {
-		
+		MAIN_GAME = game;
 	}
 	
 	@Override

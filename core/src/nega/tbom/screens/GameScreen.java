@@ -14,7 +14,7 @@ public class GameScreen implements Screen {
 	private float accumulator, deltaTime = 0.01f, frameTime;
 	
 	public GameScreen(final MainGame game) {
-		
+		MAIN_GAME = game;
 		prevTime = TimeUtils.millis()-2;
 	}
 	
