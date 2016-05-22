@@ -1,20 +1,17 @@
 package nega.tbom;
 
+import nega.tbom.screens.GameScreen;
+import nega.tbom.screens.MainMenuScreen;
+import nega.tbom.screens.PauseScreen;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import nega.tbom.screens.*;
 
 public class MainGame extends Game {
 	
-	private SpriteBatch batch;
-	private Texture img;
-	
-	Screen MENU, GAME, PAUSE;
+	private Screen MENU, GAME, PAUSE;
 	
 	@Override
 	public void create () {
@@ -22,7 +19,7 @@ public class MainGame extends Game {
 		GAME = new GameScreen(this);
 		PAUSE = new PauseScreen(this);
 		
-		this.setScreen(MENU);
+		this.setScreen(GAME);
 	}
 
 	@Override
