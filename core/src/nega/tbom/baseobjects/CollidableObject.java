@@ -12,5 +12,9 @@ public class CollidableObject extends GameObject{
 	public boolean overlaps(Rectangle r){
 		return rect.overlaps(r);
 	}
+	
+	public Rectangle getRect(){
+		return rect;
+	}
 
 }
