@@ -19,7 +19,7 @@ public class MainGame extends Game {
 		GAME = new GameScreen(this);
 		PAUSE = new PauseScreen(this);
 		
-		this.setScreen(GAME);
+		this.setScreen(MENU);
 	}
 
 	@Override
