@@ -1,26 +1,26 @@
 package nega.tbom.framework;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import nega.tbom.baseobjects.CollidableObject;
+
 import com.badlogic.gdx.math.Rectangle;
 
 public class QuadTree {
 	
-	private int MAX_OBJECTS = 7;
+	private final int MAX_OBJECTS = 7;
 	
 	private QuadTree[] nodes;
-	private LinkedList<Rectangle> rects;
+	private ArrayList<CollidableObject> objects;
 	private Rectangle bounds;
 	
 	public QuadTree(Rectangle bounds){
 		nodes = new QuadTree[4];
 		this.bounds = bounds;
-		rects = new LinkedList<Rectangle>();
+		objects = new ArrayList<CollidableObject>();
 	}
 	
-	public void insert(Rectangle obj){
+	public void insert(CollidableObject obj){
 		if(nodes[0] != null){
 			if(obj.overlaps(nodes[0].bounds)){
 				nodes[0].insert(obj);
@@ -41,14 +41,14 @@ public class QuadTree {
 			return;
 		}
 		
-		rects.add(obj);
+		objects.add(obj);
 		
-		if(rects.size() > MAX_OBJECTS && nodes[0] == null){
+		if(objects.size() > MAX_OBJECTS && nodes[0] == null){
 			split();
 			
-			Rectangle tmp;
-			for(int i = 0; i<rects.size(); i++){
-				tmp = rects.get(i);
+			CollidableObject tmp;
+			for(int i = 0; i<objects.size(); i++){
+				tmp = objects.get(i);
 				if(tmp.overlaps(nodes[0].bounds)){
 					nodes[0].insert(tmp);
 				}
@@ -65,32 +65,62 @@ public class QuadTree {
 					nodes[3].insert(tmp);
 				}
 			}
-			rects.clear();
+			objects.clear();
 		}
 	}
 	
-	public LinkedList<Rectangle> retrieve(Rectangle obj, LinkedList<Rectangle> possRects){
+	public ArrayList<CollidableObject> retrieve(CollidableObject obj, ArrayList<CollidableObject> possobjects){
 		if(nodes[0] != null){
 			if(obj.overlaps(nodes[0].bounds)){
-				possRects.addAll(nodes[0].retrieve(obj, possRects));
+				possobjects.addAll(nodes[0].retrieve(obj, possobjects));
 			}
 			
 			if(obj.overlaps(nodes[1].bounds)){
-				possRects.addAll(nodes[1].retrieve(obj, possRects));
+				possobjects.addAll(nodes[1].retrieve(obj, possobjects));
 			}
 			
 			if(obj.overlaps(nodes[2].bounds)){
-				possRects.addAll(nodes[2].retrieve(obj, possRects));
+				possobjects.addAll(nodes[2].retrieve(obj, possobjects));
 			}
 			
 			if(obj.overlaps(nodes[3].bounds)){
-				possRects.addAll(nodes[3].retrieve(obj, possRects));
+				possobjects.addAll(nodes[3].retrieve(obj, possobjects));
 			}
 		} else {
-			possRects.addAll(rects);
+			possobjects.addAll(objects);
 		}
 		
-		return possRects;
+		return possobjects;
+	}
+	
+	public void removeObject(CollidableObject obj, QuadTree parent){
+		if(nodes[0] != null){
+			if(obj.overlaps(nodes[0].bounds)){
+				removeObject(obj, this);
+			}
+			
+			if(obj.overlaps(nodes[1].bounds)){
+				removeObject(obj, this);
+			}
+			
+			if(obj.overlaps(nodes[2].bounds)){
+				removeObject(obj, this);
+			}
+			
+			if(obj.overlaps(nodes[3].bounds)){
+				removeObject(obj, this);
+			}
+		}
+		if(nodes[0] == null){
+			objects.remove(obj);
+			if(parent.nodes[0].objects.isEmpty() && parent.nodes[1].objects.isEmpty() &&
+					parent.nodes[2].objects.isEmpty() && parent.nodes[3].objects.isEmpty()){
+				parent.nodes[0] = null;
+				parent.nodes[1] = null;
+				parent.nodes[2] = null;
+				parent.nodes[3] = null;
+			}
+		}
 	}
 	
 	private void split(){
@@ -104,7 +134,7 @@ public class QuadTree {
 	}
 	
 	public void clearAll(){
-		rects.clear();
+		objects.clear();
 		
 		for(int i = 0; i<nodes.length; i++){
 			if(nodes[i] != null){
@@ -118,23 +148,4 @@ public class QuadTree {
 	public String toString(){
 		return "Bounds: " + bounds.getX() + ", " + bounds.getY() + ", " + bounds.getWidth() + ", " + bounds.getHeight() + ", ";
 	}
-	
-	public void render(ShapeRenderer sr){//to visualize, not part of actual class
-		if(nodes[0] != null){
-			nodes[0].render(sr);
-			nodes[1].render(sr);
-			nodes[2].render(sr);
-			nodes[3].render(sr);
-		}
-		
-		sr.set(ShapeRenderer.ShapeType.Line);
-		sr.setColor(Color.BLACK);
-		sr.rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
-		sr.set(ShapeRenderer.ShapeType.Filled);
-		sr.setColor(Color.RED);
-		for(int i = 0; i<rects.size(); i++){
-			sr.rect(rects.get(i).getX(), rects.get(i).getY(), rects.get(i).getWidth(), rects.get(i).getHeight());
-		}
-	}
-	
 }
