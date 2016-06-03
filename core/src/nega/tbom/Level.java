@@ -109,9 +109,17 @@ public class Level implements InputProcessor {
 	public boolean keyDown(int keycode) {
 		switch (keycode) {
 		case Keys.W:
-			
+			player.setDirY(1);
 			break;
-
+		case Keys.A:
+			player.setDirX(-1);
+			break;
+		case Keys.S:
+			player.setDirY(-1);
+			break;
+		case Keys.D:
+			player.setDirX(1);
+			break;
 		default:
 			break;
 		}
@@ -120,7 +128,22 @@ public class Level implements InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
-		
+		switch (keycode) {
+		case Keys.W:
+			player.setDirY(0);
+			break;
+		case Keys.A:
+			player.setDirX(0);
+			break;
+		case Keys.S:
+			player.setDirY(0);
+			break;
+		case Keys.D:
+			player.setDirX(0);
+			break;
+		default:
+			break;
+		}
 		return false;
 	}
 
