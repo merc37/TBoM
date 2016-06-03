@@ -8,6 +8,7 @@ import nega.tbom.framework.QuadTree;
 import nega.tbom.objects.Player;
 
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,18 +25,19 @@ public class Level implements InputProcessor{
 	private OrthographicCamera cam;
 	private OrthogonalTiledMapRenderer mapRenderer;
 	private int mapWidth, mapHeight, mapTileWidth, mapTileHeight;
-	private TiledMap map;
 	private static ArrayList<CollidableObject> collidables = new ArrayList<CollidableObject>(25);
 	private static ArrayList<GameObject> objects = new ArrayList<GameObject>(10);
 	
 	public Level(Player player, TiledMap map) {
 		this.player = player;
-		this.map = map;
 		MapProperties props = map.getProperties();
-		//mapWidth = props.
-		mapRenderer = new OrthogonalTiledMapRenderer(map);
+		mapWidth = props.get("width", Integer.class);
+		mapHeight = props.get("height", Integer.class);
+		mapTileWidth = props.get("tilewidth", Integer.class);
+		mapTileHeight = props.get("tileheight", Integer.class);
+		mapRenderer = new OrthogonalTiledMapRenderer(map, 1/32f);
 		quadTree = new QuadTree(new Rectangle(0, 0, mapWidth*mapTileWidth, mapHeight*mapTileHeight));
-		cam = new OrthographicCamera();
+		cam = new OrthographicCamera(30, 30*((float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth()));
 	}
 	
 	public void update(float delta, float time){
@@ -46,6 +48,8 @@ public class Level implements InputProcessor{
 		for(int i = 0; i<collidables.size(); i++){
 			collidables.get(i).update(delta, time);
 		}
+		
+		//cam.position.set(, 0);
 		
 		quadTree.clearAll();
 		for(int i = 0; i<collidables.size(); i++){
@@ -83,6 +87,8 @@ public class Level implements InputProcessor{
 	}
 	
 	public void render(SpriteBatch batch, float time, float alpha){
+		mapRenderer.render();
+		
 		for(int i = 0; i<objects.size(); i++){
 			objects.get(i).render(batch, time, alpha);
 		}
