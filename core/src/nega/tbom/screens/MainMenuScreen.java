@@ -27,8 +27,8 @@ public class MainMenuScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);
 		uiSkin = new Skin(Gdx.files.internal("uiskin/uiskin.json"));
 		
-		Stack table = new Stack();
-//		Table table = new Table();
+//		Stack table = new Stack();
+		Table table = new Table();
 		table.setFillParent(true);
 		TextButton OPTIONS_BUTTON = new TextButton("Options", uiSkin);
 		table.add(OPTIONS_BUTTON);
