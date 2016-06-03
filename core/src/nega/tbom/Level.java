@@ -32,7 +32,7 @@ public class Level implements InputProcessor{
 		this.player = player;
 		this.map = map;
 		MapProperties props = map.getProperties();
-		//mapWidth;
+		//mapWidth = props.
 		mapRenderer = new OrthogonalTiledMapRenderer(map);
 		quadTree = new QuadTree(new Rectangle(0, 0, mapWidth*mapTileWidth, mapHeight*mapTileHeight));
 		cam = new OrthographicCamera();
