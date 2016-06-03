@@ -36,7 +36,7 @@ public class GameScreen implements Screen {
 		prevTime = currTime;
 		
 		accumulator += frameTime;
-		while(accumulator >= deltaTime){
+		while(accumulator >= deltaTime) {
 			//do updating of game stuff
 			accumulator -= deltaTime;
 		}

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public abstract class CollidableObject extends GameObject implements Collision{
+public abstract class CollidableObject extends GameObject implements Collision {
 	
 	public CollidableObject(Rectangle rect, Texture texture) {
 		super(rect, texture);
@@ -16,13 +16,11 @@ public abstract class CollidableObject extends GameObject implements Collision{
 	
 	public abstract void render(SpriteBatch batch, float time, float alpha);
 	
-	public abstract void dispose();
-	
-	public boolean overlaps(Rectangle r){
+	public boolean overlaps(Rectangle r) {
 		return rect.overlaps(r);
 	}
 	
-	public Rectangle getRect(){
+	public Rectangle getRect() {
 		return rect;
 	}
 

@@ -7,8 +7,8 @@ import nega.tbom.baseobjects.GameObject;
 import nega.tbom.framework.QuadTree;
 import nega.tbom.objects.Player;
 
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,8 +17,9 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
-public class Level implements InputProcessor{
+public class Level implements InputProcessor {
 
 	private QuadTree quadTree;
 	private Player player;
@@ -40,32 +41,35 @@ public class Level implements InputProcessor{
 		cam = new OrthographicCamera(30, 30*((float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth()));
 	}
 	
-	public void update(float delta, float time){
-		for(int i = 0; i<objects.size(); i++){
+	public void update(float delta, float time) {
+		for(int i = 0; i<objects.size(); i++) {
 			objects.get(i).update(delta, time);
 		}
 		
-		for(int i = 0; i<collidables.size(); i++){
+		for(int i = 0; i<collidables.size(); i++) {
 			collidables.get(i).update(delta, time);
 		}
 		
-		//cam.position.set(, 0);
+		cam.position.set(player.getCenter(new Vector2()), 0);
+		cam.position.set(MathUtils.clamp(cam.position.x, 0, mapWidth*mapTileWidth-cam.viewportWidth),
+				MathUtils.clamp(cam.position.y, 0, mapHeight*mapTileHeight-cam.viewportHeight), 0);
+		cam.update();
 		
 		quadTree.clearAll();
-		for(int i = 0; i<collidables.size(); i++){
+		for(int i = 0; i<collidables.size(); i++) {
 			quadTree.insert(collidables.get(i));
 		}
 		
 		ArrayList<CollidableObject> possibleCollisions = new ArrayList<CollidableObject>(7);//possible error with how retrieve works
 		ArrayList<Integer> removed = new ArrayList<Integer>();
 		CollidableObject obj1, obj2;
-		for(int i = 0; i<collidables.size(); i++){
+		for(int i = 0; i<collidables.size(); i++) {
 			obj1 = collidables.get(i);
 			possibleCollisions.clear();
 			quadTree.retrieve(obj1, possibleCollisions);
-			for(int j = 0; j<possibleCollisions.size(); j++){
+			for(int j = 0; j<possibleCollisions.size(); j++) {
 				obj2 = possibleCollisions.get(j);
-				if(obj1.overlaps(obj2.getRect())){
+				if(obj1.overlaps(obj2.getRect())) {
 					boolean remove = obj2.onCollide(obj1);
 					if(remove) removed.add(i);
 				}
@@ -73,11 +77,11 @@ public class Level implements InputProcessor{
 		}
 		
 		//remove objects
-		if(!removed.isEmpty()){
+		if(!removed.isEmpty()) {
 			int l;
 			CollidableObject last;
 			
-			for(int i = removed.size()-1; i>=0; i--){
+			for(int i = removed.size()-1; i>=0; i--) {
 				l = collidables.size()-1;
 				last = collidables.get(l);
 				collidables.set(removed.get(i), last);
@@ -86,28 +90,28 @@ public class Level implements InputProcessor{
 		}
 	}
 	
-	public void render(SpriteBatch batch, float time, float alpha){
-		mapRenderer.render();
+	public void render(SpriteBatch batch, float time, float alpha) {
+		batch.setProjectionMatrix(cam.combined);
 		
-		for(int i = 0; i<objects.size(); i++){
+		for(int i = 0; i<objects.size(); i++) {
 			objects.get(i).render(batch, time, alpha);
 		}
 		
-		for(int i = 0; i<collidables.size(); i++){
+		for(int i = 0; i<collidables.size(); i++) {
 			collidables.get(i).render(batch, time, alpha);
 		}
 	}
 	
-	public static void clearObjects(){
+	public static void clearObjects() {
 		objects.clear();
 		collidables.clear();
 	}
 	
-	public static void AddObject(CollidableObject obj){
+	public static void AddObject(CollidableObject obj) {
 		collidables.add(obj);
 	}
 	
-	public static void AddObject(GameObject obj){
+	public static void AddObject(GameObject obj) {
 		objects.add(obj);
 	}
 
