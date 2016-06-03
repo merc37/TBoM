@@ -1,11 +1,14 @@
 package nega.tbom.baseobjects;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
 
-public class GameObject {
+public abstract class GameObject implements Disposable{
 	
 	protected Rectangle rect;
 	protected Texture texture;
@@ -16,13 +19,9 @@ public class GameObject {
 		this.texture = texture;
 	}
 	
-	public void update(float delta, float time){
-		
-	}
+	public abstract void update(float delta, float time);
 	
-	public void render(SpriteBatch batch, float time, float alpha){
-		batch.draw(texture, getX(), getY());
-	}
+	public abstract void render(SpriteBatch batch, float time, float alpha);
 	
 	public float getX(){
 		return rect.getX();
@@ -63,4 +62,21 @@ public class GameObject {
 	public void setPos(Vector2 position){
 		rect.setPosition(position);
 	}
+	
+	public static Animation makeAnimation(Texture sheet, int columns, int rows){//assumes pixel squares for each frame
+		TextureRegion[][] regions = TextureRegion.split(sheet, sheet.getWidth()/columns, sheet.getHeight()/rows);
+		TextureRegion[] frames = new TextureRegion[columns*rows];
+		
+		int index = 0;
+        for (int i = 0; i <rows ; i++) {
+            for (int j = 0; j < columns; j++) {
+                frames[index++] = regions[i][j];
+            }
+        }
+        
+        return new Animation(0.0166f, frames);
+	}
+
+	@Override
+	public abstract void dispose();
 }

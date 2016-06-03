@@ -3,13 +3,20 @@ package nega.tbom.baseobjects;
 import nega.tbom.objects.Player;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class CollidableObject extends GameObject{
+public abstract class CollidableObject extends GameObject implements Collision{
 	
 	public CollidableObject(Rectangle rect, Texture texture) {
 		super(rect, texture);
 	}
+
+	public abstract void update(float delta, float time);
+	
+	public abstract void render(SpriteBatch batch, float time, float alpha);
+	
+	public abstract void dispose();
 	
 	public boolean overlaps(Rectangle r){
 		return rect.overlaps(r);

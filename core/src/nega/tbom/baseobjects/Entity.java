@@ -4,24 +4,23 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Entity extends CollidableObject{
+public abstract class Entity extends CollidableObject{
 
 	protected float renderX, renderY;
 	
 	public Entity(Rectangle rect, Texture texture) {
 		super(rect, texture);
 	}
-	
+
 	@Override
 	public void update(float delta, float time){
-		renderX = getX();
-		renderY = getY();
+		renderX = rect.getX();
+		renderY = rect.getY();
 	}
 	
 	@Override
 	public void render(SpriteBatch batch, float time, float alpha){
-		renderX = getX()*alpha + renderX*(1.0f - alpha);
-		renderY = getY()*alpha + renderY*(1.0f - alpha);
+		renderX = rect.getX()*alpha + renderX*(1.0f-alpha);
+		renderY = rect.getY()*alpha + renderY*(1.0f-alpha);
 	}
-
 }
