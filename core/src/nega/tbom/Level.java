@@ -7,6 +7,8 @@ import nega.tbom.baseobjects.GameObject;
 import nega.tbom.framework.QuadTree;
 import nega.tbom.objects.Player;
 
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapProperties;
@@ -15,7 +17,11 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
+<<<<<<< HEAD
 public class Level {
+=======
+public class Level implements InputProcessor{
+>>>>>>> branch 'master' of https://github.com/maxlep/TBoM.git
 
 	private QuadTree quadTree;
 	private Player player;
@@ -30,7 +36,7 @@ public class Level {
 		this.player = player;
 		this.map = map;
 		MapProperties props = map.getProperties();
-		//mapWidth;
+		//mapWidth = props.
 		mapRenderer = new OrthogonalTiledMapRenderer(map);
 		quadTree = new QuadTree(new Rectangle(0, 0, mapWidth*mapTileWidth, mapHeight*mapTileHeight));
 		cam = new OrthographicCamera();
@@ -101,5 +107,60 @@ public class Level {
 	
 	public static void AddObject(GameObject obj) {
 		objects.add(obj);
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		switch (keycode) {
+		case Keys.W:
+			
+			break;
+
+		default:
+			break;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
