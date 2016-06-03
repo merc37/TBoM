@@ -17,11 +17,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
-<<<<<<< HEAD
-public class Level {
-=======
-public class Level implements InputProcessor{
->>>>>>> branch 'master' of https://github.com/maxlep/TBoM.git
+public class Level implements InputProcessor {
 
 	private QuadTree quadTree;
 	private Player player;
