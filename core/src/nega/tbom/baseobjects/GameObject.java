@@ -42,6 +42,10 @@ public abstract class GameObject {
 		return rect.getPosition(pos);
 	}
 	
+	public Vector2 getCenter(Vector2 center){
+		return rect.getCenter(center);
+	}
+	
 	public void setX(float x) {
 		rect.setX(x);
 	}
