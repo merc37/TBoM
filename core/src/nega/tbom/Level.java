@@ -5,23 +5,37 @@ import java.util.ArrayList;
 import nega.tbom.baseobjects.CollidableObject;
 import nega.tbom.baseobjects.GameObject;
 import nega.tbom.framework.QuadTree;
+import nega.tbom.objects.Player;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Level extends GameObject{
+public class Level{
 
 	private QuadTree quadTree;
+	private Player player;
+	private OrthographicCamera cam;
+	private OrthogonalTiledMapRenderer mapRenderer;
+	private int mapWidth, mapHeight, mapTileWidth, mapTileHeight;
+	private TiledMap map;
 	private static ArrayList<CollidableObject> collidables = new ArrayList<CollidableObject>(25);
 	private static ArrayList<GameObject> objects = new ArrayList<GameObject>(10);
 	
-	public Level(Rectangle rect, Texture texture) {
-		super(rect, texture);
-		quadTree = new QuadTree(rect);
+	public Level(Player player, TiledMap map) {
+		this.player = player;
+		this.map = map;
+		MapProperties props = map.getProperties();
+		//mapWidth;
+		mapRenderer = new OrthogonalTiledMapRenderer(map);
+		quadTree = new QuadTree(new Rectangle(0, 0, mapWidth*mapTileWidth, mapHeight*mapTileHeight));
+		cam = new OrthographicCamera();
 	}
 	
-	@Override
 	public void update(float delta, float time){
 		for(int i = 0; i<objects.size(); i++){
 			objects.get(i).update(delta, time);
@@ -46,35 +60,39 @@ public class Level extends GameObject{
 			for(int j = 0; j<possibleCollisions.size(); j++){
 				obj2 = possibleCollisions.get(j);
 				if(obj1.overlaps(obj2.getRect())){
-					boolean r = obj2.onCollide(obj1);
-					if(r){
-						removed.add(i);
-					}
+					boolean remove = obj2.onCollide(obj1);
+					if(remove) removed.add(i);
 				}
 			}
 		}
 		
 		//remove objects
-		int l;
-		CollidableObject last;
-		for(int i : removed){
-			l = collidables.size()-1;
-			last = collidables.get(l);
-			while(removed.get(removed.size()-1)==l){
-				collidables.remove(l);
-				removed.remove(removed.size()-1);
+		if(!removed.isEmpty()){
+			int l;
+			CollidableObject last;
+			
+			for(int i = removed.size()-1; i>=0; i--){
 				l = collidables.size()-1;
-			}
-			if(collidables.size()>=2){
-				collidables.set(i, last);
+				last = collidables.get(l);
+				collidables.set(removed.get(i), last);
 				collidables.remove(l);
 			}
 		}
 	}
 	
-	@Override
 	public void render(SpriteBatch batch, float time, float alpha){
+		for(int i = 0; i<objects.size(); i++){
+			objects.get(i).render(batch, time, alpha);
+		}
 		
+		for(int i = 0; i<collidables.size(); i++){
+			collidables.get(i).render(batch, time, alpha);
+		}
+	}
+	
+	public static void clearObjects(){
+		objects.clear();
+		collidables.clear();
 	}
 	
 	public static void AddObject(CollidableObject obj){

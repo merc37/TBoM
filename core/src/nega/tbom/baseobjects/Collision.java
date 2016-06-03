@@ -1,5 +1,9 @@
 package nega.tbom.baseobjects;
 
+import nega.tbom.objects.Player;
+
 public interface Collision {
-	public void onCollide(CollidableObject obj);
+	public boolean onCollide(CollidableObject obj);
+
+	public boolean onCollide(Player obj);
 }
