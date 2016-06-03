@@ -19,12 +19,12 @@ public class MainGame extends Game {
 		GAME = new GameScreen(this);
 		PAUSE = new PauseScreen(this);
 		
-		this.setScreen(MENU);
+		this.setScreen(GAME);
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		super.render();
 	}

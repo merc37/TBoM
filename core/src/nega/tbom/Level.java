@@ -39,6 +39,7 @@ public class Level implements InputProcessor {
 		mapRenderer = new OrthogonalTiledMapRenderer(map, 1/32f);
 		quadTree = new QuadTree(new Rectangle(0, 0, mapWidth*mapTileWidth, mapHeight*mapTileHeight));
 		cam = new OrthographicCamera(30, 30*((float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth()));
+		AddObject(player);
 	}
 	
 	public void update(float delta, float time) {
@@ -92,6 +93,8 @@ public class Level implements InputProcessor {
 	
 	public void render(SpriteBatch batch, float time, float alpha) {
 		batch.setProjectionMatrix(cam.combined);
+		
+		mapRenderer.render();
 		
 		for(int i = 0; i<objects.size(); i++) {
 			objects.get(i).render(batch, time, alpha);
