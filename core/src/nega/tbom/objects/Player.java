@@ -30,10 +30,7 @@ public class Player extends Entity {
 	@Override
 	public void render(SpriteBatch batch, float time, float alpha) {
 		super.render(batch, time, alpha);
-<<<<<<< HEAD
-=======
 		System.out.println("InterpX: " + renderX);
->>>>>>> refs/remotes/origin/master
 		batch.draw(texture, renderX, renderY);
 	}
 	
