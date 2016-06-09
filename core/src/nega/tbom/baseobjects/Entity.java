@@ -14,13 +14,13 @@ public abstract class Entity extends CollidableObject {
 
 	@Override
 	public void update(float delta, float time) {
-		renderX = rect.getX();
-		renderY = rect.getY();
+		renderX = getX();
+		renderY = getY();
 	}
 	
 	@Override
 	public void render(SpriteBatch batch, float time, float alpha) {
-		renderX = rect.getX()*alpha + renderX*(1.0f-alpha);
-		renderY = rect.getY()*alpha + renderY*(1.0f-alpha);
+		renderX = getX()*alpha + renderX*(1.0f-alpha);
+		renderY = getY()*alpha + renderY*(1.0f-alpha);
 	}
 }

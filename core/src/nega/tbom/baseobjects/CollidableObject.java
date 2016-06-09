@@ -12,8 +12,10 @@ public abstract class CollidableObject extends GameObject implements Collision {
 		super(rect, texture);
 	}
 
+	@Override
 	public abstract void update(float delta, float time);
 	
+	@Override
 	public abstract void render(SpriteBatch batch, float time, float alpha);
 	
 	public boolean overlaps(Rectangle r) {
