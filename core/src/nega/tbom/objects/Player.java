@@ -15,19 +15,25 @@ public class Player extends Entity {
 	public Player(Rectangle rect, Texture texture) {
 		super(rect, texture);
 		direction = new Vector2(0, 0);
-		speed = 10f;
+		speed = 375;
 	}
 	
 	@Override
 	public void update(float delta, float time) {
 		super.update(delta, time);
-		setX(getX() + direction.x*speed);
-		setY(getY() + direction.y*speed);
+		System.out.println("PrevX: " + renderX);
+		setX(getX() + direction.x*speed*delta);
+		System.out.println("NewX: " + getX());
+		setY(getY() + direction.y*speed*delta);
 	}
 	
 	@Override
 	public void render(SpriteBatch batch, float time, float alpha) {
 		super.render(batch, time, alpha);
+<<<<<<< HEAD
+=======
+		System.out.println("InterpX: " + renderX);
+>>>>>>> refs/remotes/origin/master
 		batch.draw(texture, renderX, renderY);
 	}
 	

@@ -11,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -25,21 +26,29 @@ public class Level implements InputProcessor {
 	private Player player;
 	private OrthographicCamera cam;
 	private OrthogonalTiledMapRenderer mapRenderer;
+	private SpriteBatch batch;
 	private int mapWidth, mapHeight, mapTileWidth, mapTileHeight;
 	private static ArrayList<CollidableObject> collidables = new ArrayList<CollidableObject>(25);
 	private static ArrayList<GameObject> objects = new ArrayList<GameObject>(10);
 	
 	public Level(Player player, TiledMap map) {
 		this.player = player;
+		
+		batch = new SpriteBatch();
+		
+		cam = new OrthographicCamera();
+		cam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
 		MapProperties props = map.getProperties();
 		mapWidth = props.get("width", Integer.class);
 		mapHeight = props.get("height", Integer.class);
 		mapTileWidth = props.get("tilewidth", Integer.class);
 		mapTileHeight = props.get("tileheight", Integer.class);
-		mapRenderer = new OrthogonalTiledMapRenderer(map, 1/32f);
+		mapRenderer = new OrthogonalTiledMapRenderer(map);
+		
 		quadTree = new QuadTree(new Rectangle(0, 0, mapWidth*mapTileWidth, mapHeight*mapTileHeight));
-		cam = new OrthographicCamera(30, 30*((float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth()));
-		AddObject(player);
+		
+		AddObject(player);//temp
 	}
 	
 	public void update(float delta, float time) {
@@ -50,11 +59,6 @@ public class Level implements InputProcessor {
 		for(int i = 0; i<collidables.size(); i++) {
 			collidables.get(i).update(delta, time);
 		}
-		
-		cam.position.set(player.getCenter(new Vector2()), 0);
-		cam.position.set(MathUtils.clamp(cam.position.x, 0, mapWidth*mapTileWidth-cam.viewportWidth),
-				MathUtils.clamp(cam.position.y, 0, mapHeight*mapTileHeight-cam.viewportHeight), 0);
-		cam.update();
 		
 		quadTree.clearAll();
 		for(int i = 0; i<collidables.size(); i++) {
@@ -91,11 +95,17 @@ public class Level implements InputProcessor {
 		}
 	}
 	
-	public void render(SpriteBatch batch, float time, float alpha) {
+	public void render(float time, float alpha) {
 		batch.setProjectionMatrix(cam.combined);
+		cam.position.set(player.getCenter(new Vector2()), 0);
+		cam.position.set(MathUtils.clamp(cam.position.x, 0, mapWidth*mapTileWidth),
+				MathUtils.clamp(cam.position.y, 0, mapHeight*mapTileHeight), 0);
+		cam.update();
+		mapRenderer.setView(cam);
 		
 		mapRenderer.render();
 		
+		batch.begin();
 		for(int i = 0; i<objects.size(); i++) {
 			objects.get(i).render(batch, time, alpha);
 		}
@@ -103,6 +113,7 @@ public class Level implements InputProcessor {
 		for(int i = 0; i<collidables.size(); i++) {
 			collidables.get(i).render(batch, time, alpha);
 		}
+		batch.end();
 	}
 	
 	public static void clearObjects() {
