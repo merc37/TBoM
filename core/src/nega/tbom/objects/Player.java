@@ -28,6 +28,7 @@ public class Player extends Entity {
 	@Override
 	public void render(SpriteBatch batch, float time, float alpha) {
 		super.render(batch, time, alpha);
+		batch.draw(texture, renderX, renderY);
 	}
 	
 	/**
