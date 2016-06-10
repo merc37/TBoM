@@ -97,9 +97,9 @@ public class Level implements InputProcessor {
 	
 	public void render(float time, float alpha) {
 		batch.setProjectionMatrix(cam.combined);
-		cam.position.set(player.getCenter(new Vector2()), 0);
-		cam.position.set(MathUtils.clamp(cam.position.x, 0, mapWidth*mapTileWidth),
-				MathUtils.clamp(cam.position.y, 0, mapHeight*mapTileHeight), 0);
+//		cam.position.set(player.getCenter(new Vector2()), 0);
+//		cam.position.set(MathUtils.clamp(cam.position.x, 0, mapWidth*mapTileWidth),
+//				MathUtils.clamp(cam.position.y, 0, mapHeight*mapTileHeight), 0);
 		cam.update();
 		mapRenderer.setView(cam);
 		

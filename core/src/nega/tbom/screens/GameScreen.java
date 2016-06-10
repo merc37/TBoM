@@ -14,14 +14,16 @@ public class GameScreen implements Screen {
 
 	private final MainGame MAIN_GAME;
 	private long currTime, prevTime;
-	private float accumulator, deltaTime = 1.0f/50.0f, frameTime, time;
+	private float accumulator, frameTime, time;
+	private final float dt = 1.0f/60.0f;
+	
 	private Floor floor;
 	
 	public GameScreen(final MainGame game) {
 		MAIN_GAME = game;
 		prevTime = TimeUtils.millis();
 		floor = new Floor();
-		System.out.println(deltaTime);
+		System.out.println(dt);
 	}
 	
 	@Override
@@ -33,25 +35,25 @@ public class GameScreen implements Screen {
 	public void render(float delta) {
 		//update
 		currTime = TimeUtils.millis();
-		frameTime = currTime-prevTime;
-		frameTime = (float)(frameTime/1000.0f);
+		frameTime = currTime - prevTime;
+		frameTime = (float)(frameTime / 1000.0f);
 		prevTime = currTime;
 		System.out.println("Before Frame TIme: " + frameTime);
-		if(frameTime > 0.50f){
-			frameTime = 0.50f;
+		if(frameTime > 0.25f) {
+			frameTime = 0.25f;
 		}
 		System.out.println("After Frame TIme: " + frameTime);
 		
 		accumulator += frameTime;
-		while(accumulator >= deltaTime) {
+		while(accumulator >= dt) {
 			//do updating of game stuff
-			floor.getCurrentLevel().update(deltaTime, time);
-			time+=deltaTime;
-			accumulator -= deltaTime;
+			floor.getCurrentLevel().update(dt, time);
+			time += dt;
+			accumulator -= dt;
 		}
 		
 		//do rendering of game stuff and pass interpolation alpha gotten by accumulator/deltaTime
-		floor.getCurrentLevel().render(time, accumulator/deltaTime);
+		floor.getCurrentLevel().render(time, accumulator/dt);
 	}
 
 	@Override
