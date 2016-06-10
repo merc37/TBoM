@@ -15,7 +15,7 @@ public class GameScreen implements Screen {
 	private final MainGame MAIN_GAME;
 	private long currTime, prevTime;
 	private float accumulator, frameTime, time;
-	private final float dt = 1.0f/144.0f;
+	private final float dt = 1.0f/60.0f;
 	
 	private Floor floor;
 	
@@ -40,11 +40,12 @@ public class GameScreen implements Screen {
 		frameTime = currTime - prevTime;
 		frameTime = (float)(frameTime / 1000.0f);
 		prevTime = currTime;
-		System.out.print("Before: " + frameTime);
+//		System.out.print(", Before: " + frameTime);
 		if(frameTime > 0.25f) {
 			frameTime = 0.25f;
 		}
-		System.out.print(", After: " + frameTime);
+		System.out.print(", Frametime: " + frameTime);
+		System.out.print(", accum: "+accumulator);
 		
 		accumulator += frameTime;
 		while(accumulator >= dt) {

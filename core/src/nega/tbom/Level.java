@@ -104,6 +104,9 @@ public class Level implements InputProcessor {
 		mapRenderer.setView(cam);
 		
 		mapRenderer.render();
+		for (int i = 0; i < 200; i++) {
+			mapRenderer.render();
+		}
 		
 		batch.begin();
 		for(int i = 0; i<objects.size(); i++) {
