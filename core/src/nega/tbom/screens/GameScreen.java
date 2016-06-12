@@ -5,9 +5,6 @@ import nega.tbom.MainGame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class GameScreen implements Screen {
@@ -17,12 +14,12 @@ public class GameScreen implements Screen {
 	private float accumulator, frameTime, time;
 	private final float dt = 1.0f/60.0f;
 	
-	private Floor floor;
+	private Floor currFloor;
 	
 	public GameScreen(final MainGame game) {
 		MAIN_GAME = game;
 		prevTime = TimeUtils.millis();
-		floor = new Floor();
+		currFloor = new Floor();
 		System.out.println(dt);
 	}
 	
@@ -40,8 +37,8 @@ public class GameScreen implements Screen {
 		frameTime = currTime - prevTime;
 		frameTime = (float)(frameTime / 1000.0f);
 		prevTime = currTime;
-//		System.out.print(", Before: " + frameTime);
-		if(frameTime > 0.25f) {
+		
+		if(frameTime > 0.25) {
 			frameTime = 0.25f;
 		}
 		System.out.print(", Frametime: " + frameTime);
@@ -50,13 +47,13 @@ public class GameScreen implements Screen {
 		accumulator += frameTime;
 		while(accumulator >= dt) {
 			//do updating of game stuff
-			floor.getCurrentLevel().update(dt, time);
+			currFloor.getCurrentLevel().update(dt, time);
 			time += dt;
 			accumulator -= dt;
 		}
 		
 		//do rendering of game stuff and pass interpolation alpha gotten by accumulator/deltaTime
-		floor.getCurrentLevel().render(time, accumulator/dt);
+		currFloor.getCurrentLevel().render(prevTime, accumulator/dt);
 	}
 
 	@Override
@@ -81,6 +78,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		
+		currFloor.dispose();
 	}
 }

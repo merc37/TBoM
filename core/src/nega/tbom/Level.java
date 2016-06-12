@@ -19,6 +19,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class Level implements InputProcessor {
 
@@ -46,7 +47,7 @@ public class Level implements InputProcessor {
 		mapTileHeight = props.get("tileheight", Integer.class);
 		mapRenderer = new OrthogonalTiledMapRenderer(map);
 		
-		quadTree = new QuadTree(new Rectangle(0, 0, mapWidth*mapTileWidth, mapHeight*mapTileHeight));
+		quadTree = new QuadTree(0, new Rectangle(0, 0, mapWidth*mapTileWidth, mapHeight*mapTileHeight));
 		
 		AddObject(player);//temp
 	}
@@ -95,18 +96,20 @@ public class Level implements InputProcessor {
 		}
 	}
 	
-	public void render(float time, float alpha) {
+	public void render(long time, float alpha) {
 		batch.setProjectionMatrix(cam.combined);
-//		cam.position.set(player.getCenter(new Vector2()), 0);
-//		cam.position.set(MathUtils.clamp(cam.position.x, 0, mapWidth*mapTileWidth),
-//				MathUtils.clamp(cam.position.y, 0, mapHeight*mapTileHeight), 0);
+		cam.position.set(player.getCenter(new Vector2()), 0);
+		cam.position.set(MathUtils.clamp(cam.position.x, 0, mapWidth*mapTileWidth),
+				MathUtils.clamp(cam.position.y, 0, mapHeight*mapTileHeight), 0);
 		cam.update();
 		mapRenderer.setView(cam);
 		
+		mapRenderer.getBatch().disableBlending();
 		mapRenderer.render();
-		for (int i = 0; i < 200; i++) {
+		System.out.print(", MapTime: " + ((TimeUtils.millis())-time));
+		/*for (int i = 0; i < 200; i++) { //per jrenners advice
 			mapRenderer.render();
-		}
+		}*/
 		
 		batch.begin();
 		for(int i = 0; i<objects.size(); i++) {
@@ -117,6 +120,7 @@ public class Level implements InputProcessor {
 			collidables.get(i).render(batch, time, alpha);
 		}
 		batch.end();
+		System.out.print(", ObjectTime: " + ((TimeUtils.millis())-time));
 	}
 	
 	public static void clearObjects() {

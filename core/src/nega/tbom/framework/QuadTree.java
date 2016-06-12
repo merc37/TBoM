@@ -9,15 +9,18 @@ import com.badlogic.gdx.math.Rectangle;
 public class QuadTree {
 	
 	private final int MAX_OBJECTS = 7;
+	private final int MAX_SPLITS = 10;
 	
 	private QuadTree[] nodes;
 	private ArrayList<CollidableObject> objects;
 	private Rectangle bounds;
+	private int splitLevel;
 	
-	public QuadTree(Rectangle bounds){
+	public QuadTree(int splitLevel, Rectangle bounds){
 		nodes = new QuadTree[4];
 		this.bounds = bounds;
 		objects = new ArrayList<CollidableObject>();
+		this.splitLevel = splitLevel;
 	}
 	
 	public void insert(CollidableObject obj){
@@ -43,7 +46,7 @@ public class QuadTree {
 		
 		objects.add(obj);
 		
-		if(objects.size() > MAX_OBJECTS && nodes[0] == null){
+		if(objects.size() > MAX_OBJECTS && splitLevel<=MAX_SPLITS && nodes[0] == null){
 			split();
 			
 			CollidableObject tmp;
@@ -126,10 +129,10 @@ public class QuadTree {
 	private void split(){
 		if(nodes[0] == null){
 			float x = bounds.getX(), y = bounds.getY(), w = bounds.getWidth()/2, h = bounds.getHeight()/2;//half width and height
-			nodes[0] = new QuadTree(new Rectangle(x, y, w, h));
-			nodes[1] = new QuadTree(new Rectangle(x+w, y, w, h));
-			nodes[2] = new QuadTree(new Rectangle(x, y+h, w, h));
-			nodes[3] = new QuadTree(new Rectangle(x+w, y+h, w, h));
+			nodes[0] = new QuadTree(splitLevel+1, new Rectangle(x, y, w, h));
+			nodes[1] = new QuadTree(splitLevel+1, new Rectangle(x+w, y, w, h));
+			nodes[2] = new QuadTree(splitLevel+1, new Rectangle(x, y+h, w, h));
+			nodes[3] = new QuadTree(splitLevel+1, new Rectangle(x+w, y+h, w, h));
 		}
 	}
 	
