@@ -99,7 +99,7 @@ public class Level implements InputProcessor {
 		
 		mapRenderer.getBatch().disableBlending();
 		mapRenderer.render();
-		/*for (int i = 0; i < 700; i++) { //per jrenners advice
+		/*for (int i = 0; i < 700; i++) { //le fps throttler
 			mapRenderer.render();
 		}*/
 		
@@ -138,15 +138,19 @@ public class Level implements InputProcessor {
 		switch (keycode) {
 		case Keys.W:
 			player.setDirY(1);
+			player.setMoving(true);
 			break;
 		case Keys.A:
 			player.setDirX(-1);
+			player.setMoving(true);
 			break;
 		case Keys.S:
 			player.setDirY(-1);
+			player.setMoving(true);
 			break;
 		case Keys.D:
 			player.setDirX(1);
+			player.setMoving(true);
 			break;
 		default:
 			break;
@@ -159,15 +163,19 @@ public class Level implements InputProcessor {
 		switch (keycode) {
 		case Keys.W:
 			player.setDirY(0);
+			player.setMoving(false);
 			break;
 		case Keys.A:
 			player.setDirX(0);
+			player.setMoving(false);
 			break;
 		case Keys.S:
 			player.setDirY(0);
+			player.setMoving(false);
 			break;
 		case Keys.D:
 			player.setDirX(0);
+			player.setMoving(false);
 			break;
 		default:
 			break;
