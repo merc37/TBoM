@@ -15,7 +15,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Level implements InputProcessor {
@@ -94,15 +93,15 @@ public class Level implements InputProcessor {
 	}
 	
 	public void render(float time, float alpha) {
-		batch.setProjectionMatrix(cam.combined);
+		//batch.setProjectionMatrix(cam.combined);
 		
-		mapRenderer.setView(cam);
+		//mapRenderer.setView(cam);
 		
 		mapRenderer.getBatch().disableBlending();
 		mapRenderer.render();
-		/*for (int i = 0; i < 700; i++) { //le fps throttler
+		for (int i = 0; i < 700; i++) { //le fps throttler
 			mapRenderer.render();
-		}*/
+		}
 		
 		batch.begin();
 		for(int i = 0; i<objects.size(); i++) {
@@ -114,11 +113,11 @@ public class Level implements InputProcessor {
 		}
 		batch.end();
 		
-		cam.position.x = player.getRenderX() + player.getWidth()/2;
+		/*cam.position.x = player.getRenderX() + player.getWidth()/2;
 		cam.position.y = player.getRenderY() + player.getHeight()/2;
 		cam.position.set(MathUtils.clamp(cam.position.x, 0, mapWidth*mapTileWidth),
 				MathUtils.clamp(cam.position.y, 0, mapHeight*mapTileHeight), 0);
-		cam.update();
+		cam.update();*/
 	}
 	
 	public static void clearObjects() {

@@ -13,14 +13,14 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import nega.tbom.MainGame;
 
-public class MainMenuScreen implements Screen {
+public class MenuScreen implements Screen {
 
 	private final MainGame MAIN_GAME;
 	
 	private Stage stage;
 	private Skin uiSkin;
 	
-	public MainMenuScreen(final MainGame game) {
+	public MenuScreen(final MainGame game) {
 		MAIN_GAME = game;
 		
 		stage = new Stage(new ScreenViewport());

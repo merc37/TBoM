@@ -1,8 +1,6 @@
 package nega.tbom;
 
-import nega.tbom.screens.GameScreen;
-import nega.tbom.screens.MainMenuScreen;
-import nega.tbom.screens.PauseScreen;
+import nega.tbom.screens.LoadScreen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -15,11 +13,7 @@ public class MainGame extends Game {
 	
 	@Override
 	public void create () {
-		MENU = new MainMenuScreen(this);
-		GAME = new GameScreen(this);
-		PAUSE = new PauseScreen(this);
-		
-		this.setScreen(GAME);
+		this.setScreen(new LoadScreen(this));
 	}
 
 	@Override

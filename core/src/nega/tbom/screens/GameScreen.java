@@ -5,19 +5,22 @@ import nega.tbom.MainGame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 
 public class GameScreen implements Screen {
 
 	private final MainGame MAIN_GAME;
-	private float accumulator, frameTime, time;
+	private float accumulator, frameTime, time, prevDelta;
 	private final float dt = 1.0f/60.0f;
 	
 	private Floor currFloor;
+	private AssetManager asm;
 	
-	public GameScreen(final MainGame game) {
+	public GameScreen(final MainGame game, AssetManager asm) {
 		MAIN_GAME = game;
-		currFloor = new Floor();
-		System.out.println(dt);
+		this.asm = asm;
+		currFloor = new Floor(asm);
+		prevDelta = Gdx.graphics.getRawDeltaTime();
 	}
 	
 	@Override
@@ -29,13 +32,17 @@ public class GameScreen implements Screen {
 	public void render(float delta) {
 		Gdx.graphics.setTitle(""+Gdx.graphics.getFramesPerSecond());
 		
+		prevDelta = frameTime;
 		frameTime = Gdx.graphics.getRawDeltaTime();
+		if((Math.abs(frameTime-prevDelta)) > 2.0f){
+			frameTime = prevDelta;
+		}
 		
 		if(frameTime > 0.25) {
 			frameTime = 0.25f;
 		}
-		System.out.print(", Frametime: " + frameTime);
-		System.out.print(", accum: "+accumulator);
+		//System.out.print(", Frametime: " + frameTime*1000f);
+		//System.out.print(", accum: "+accumulator);
 		
 		accumulator += frameTime;
 		while(accumulator >= dt) {
@@ -71,6 +78,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		currFloor.dispose();
+		asm.dispose();
 	}
 }
