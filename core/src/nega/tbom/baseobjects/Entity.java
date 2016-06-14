@@ -9,30 +9,24 @@ public abstract class Entity extends CollidableObject {
 
 	protected Vector2 direction;
 	protected float speed;
-	protected boolean moving;
 	protected float renderX, renderY;
 	
 	public Entity(Rectangle rect, Texture texture) {
 		super(rect, texture);
 		direction = new Vector2(0, 0);
 		speed = 375;
-		moving = false;
 	}
 
 	@Override
 	public void update(float delta, float time) {
-		if(moving){
-			renderX = getX();
-			renderY = getY();
-		}
+		renderX = getX();
+		renderY = getY();
 	}
 	
 	@Override
 	public void render(SpriteBatch batch, float time, float alpha) {
-		if(moving){
-			renderX = getX()*alpha + renderX*(1.0f-alpha);
-			renderY = getY()*alpha + renderY*(1.0f-alpha);
-		}
+		renderX = getX()*alpha + renderX*(1.0f-alpha);
+		renderY = getY()*alpha + renderY*(1.0f-alpha);
 	}
 	
 	public float getRenderX(){
@@ -41,10 +35,6 @@ public abstract class Entity extends CollidableObject {
 	
 	public float getRenderY(){
 		return renderY;
-	}
-	
-	public void setMoving(boolean moving){
-		this.moving = moving;
 	}
 	
 	/**

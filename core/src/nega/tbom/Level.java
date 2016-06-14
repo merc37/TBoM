@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Level implements InputProcessor {
@@ -115,8 +116,8 @@ public class Level implements InputProcessor {
 		
 		cam.position.x = player.getRenderX() + player.getWidth()/2;
 		cam.position.y = player.getRenderY() + player.getHeight()/2;
-		/*cam.position.set(MathUtils.clamp(cam.position.x, 0, mapWidth*mapTileWidth),
-				MathUtils.clamp(cam.position.y, 0, mapHeight*mapTileHeight), 0);*/
+		cam.position.set(MathUtils.clamp(cam.position.x, 0, mapWidth*mapTileWidth),
+				MathUtils.clamp(cam.position.y, 0, mapHeight*mapTileHeight), 0);
 		cam.update();
 	}
 	
@@ -138,19 +139,15 @@ public class Level implements InputProcessor {
 		switch (keycode) {
 		case Keys.W:
 			player.setDirY(1);
-			player.setMoving(true);
 			break;
 		case Keys.A:
 			player.setDirX(-1);
-			player.setMoving(true);
 			break;
 		case Keys.S:
 			player.setDirY(-1);
-			player.setMoving(true);
 			break;
 		case Keys.D:
 			player.setDirX(1);
-			player.setMoving(true);
 			break;
 		default:
 			break;
@@ -163,19 +160,15 @@ public class Level implements InputProcessor {
 		switch (keycode) {
 		case Keys.W:
 			player.setDirY(0);
-			player.setMoving(false);
 			break;
 		case Keys.A:
 			player.setDirX(0);
-			player.setMoving(false);
 			break;
 		case Keys.S:
 			player.setDirY(0);
-			player.setMoving(false);
 			break;
 		case Keys.D:
 			player.setDirX(0);
-			player.setMoving(false);
 			break;
 		default:
 			break;
