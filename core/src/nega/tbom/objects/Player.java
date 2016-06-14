@@ -1,5 +1,7 @@
 package nega.tbom.objects;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -22,6 +24,7 @@ public class Player extends Entity {
 	public void update(float delta, float time) {
 		super.update(delta, time);
 		System.out.print(", PrevX: " + renderX);
+		System.out.print(", PrevX: " + renderX);
 		setX(getX() + direction.x*speed*delta);
 		System.out.print(", NewX: " + getX());
 		setY(getY() + direction.y*speed*delta);
@@ -30,9 +33,16 @@ public class Player extends Entity {
 	@Override
 	public void render(SpriteBatch batch, float time, float alpha) {
 		super.render(batch, time, alpha);
-		
 		System.out.println(", InterpX: " + renderX);
 		batch.draw(texture, renderX, renderY);
+	}
+	
+	public float getRenderX(){
+		return renderX;
+	}
+	
+	public float getRenderY(){
+		return renderY;
 	}
 	
 	/**
