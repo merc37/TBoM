@@ -99,7 +99,7 @@ public class Level implements InputProcessor {
 		
 		mapRenderer.getBatch().disableBlending();
 		mapRenderer.render();
-		for (int i = 0; i < 700; i++) { //le fps throttler
+		for (int i = 0; i < 500; i++) { //le fps throttler
 			mapRenderer.render();
 		}
 		

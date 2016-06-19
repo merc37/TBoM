@@ -31,12 +31,13 @@ public class GameScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		Gdx.graphics.setTitle(""+Gdx.graphics.getFramesPerSecond());
-		
-		prevDelta = frameTime;
-		frameTime = Gdx.graphics.getRawDeltaTime();
-		if((Math.abs(frameTime-prevDelta)) > 2.0f){
-			frameTime = prevDelta;
+
+		frameTime = Gdx.graphics.getDeltaTime();
+		System.out.print((frameTime*1000f) + ", ");
+		if((frameTime*1000f) > 5.0f){
+			System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
 		}
+		System.out.println();
 		
 		if(frameTime > 0.25) {
 			frameTime = 0.25f;

@@ -18,8 +18,8 @@ public class Player extends Entity {
 			
 		//System.out.print(", PrevX: " + renderX); 
 		setX(getX() + direction.x*speed*delta);
-		System.out.print(", NewX: " + getX());
-		//setY(getY() + direction.y*speed*delta);
+		//System.out.print(", NewX: " + getX());
+		setY(getY() + direction.y*speed*delta);
 	}
 	
 	@Override
