@@ -1,5 +1,7 @@
 package nega.tbom.desktop;
 
+import org.lwjgl.opengl.Display;
+
 import nega.tbom.MainGame;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
@@ -9,6 +11,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.useVsync(false);
+		config.setFullscreenMode(config.getDisplayMode());
 		new Lwjgl3Application(new MainGame(), config);
 	}
 }

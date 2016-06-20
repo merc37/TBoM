@@ -5,7 +5,9 @@ import nega.tbom.MainGame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.GL20;
 
 public class GameScreen implements Screen {
 
@@ -35,9 +37,8 @@ public class GameScreen implements Screen {
 		frameTime = Gdx.graphics.getDeltaTime();
 		System.out.print((frameTime*1000f) + ", ");
 		if((frameTime*1000f) > 5.0f){
-			System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
+			System.out.print("High Frame Time, ");
 		}
-		System.out.println();
 		
 		if(frameTime > 0.25) {
 			frameTime = 0.25f;
@@ -45,9 +46,14 @@ public class GameScreen implements Screen {
 		//System.out.print(", Frametime: " + frameTime*1000f);
 		//System.out.print(", accum: "+accumulator);
 		
+		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)){
+			Gdx.app.exit();
+		}
+		
 		accumulator += frameTime;
 		while(accumulator >= dt) {
 			//do updating of game stuff
+			
 			currFloor.getCurrentLevel().update(dt, time);
 			time += dt;
 			accumulator -= dt;
@@ -55,6 +61,7 @@ public class GameScreen implements Screen {
 		
 		//do rendering of game stuff and pass interpolation alpha gotten by accumulator/dt
 		currFloor.getCurrentLevel().render(time, accumulator/dt);
+		System.out.println();
 	}
 
 	@Override
