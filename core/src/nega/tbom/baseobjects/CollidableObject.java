@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Rectangle;
 
 public abstract class CollidableObject extends GameObject implements Collision {
 	
-	public CollidableObject(Rectangle rect, Texture texture) {
-		super(rect, texture);
+	public CollidableObject(Rectangle rect) {
+		super(rect);
 	}
 
 	@Override

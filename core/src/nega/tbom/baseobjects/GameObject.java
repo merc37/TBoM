@@ -10,12 +10,10 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class GameObject {
 	
 	protected Rectangle rect;
-	protected Texture texture;
 	protected float prevX, prevY;
 	
-	public GameObject(Rectangle rect, Texture texture) {
+	public GameObject(Rectangle rect) {
 		this.rect = rect;
-		this.texture = texture;
 	}
 	
 	public abstract void update(float delta, float time);

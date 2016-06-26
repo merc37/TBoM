@@ -8,8 +8,10 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Player extends Entity {
 
-	public Player(Rectangle rect, Texture texture) {
-		super(rect, texture);
+	public static Texture playerTexture;
+	
+	public Player(Rectangle rect) {
+		super(rect);
 	}
 	
 	@Override
@@ -27,6 +29,6 @@ public class Player extends Entity {
 		super.render(batch, time, alpha);
 			
 		System.out.print(", InterpX: " + renderX + ", ");
-		batch.draw(texture, renderX, renderY);
+		batch.draw(playerTexture, renderX, renderY);
 	}
 }

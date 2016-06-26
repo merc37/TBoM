@@ -18,7 +18,7 @@ public class Floor {
 	
 	public Floor(AssetManager asm){
 		this.asm = asm;
-		currLevel = new Level(new Player(new Rectangle(0, 0, 32, 32), asm.get("rsplayer.jpg", Texture.class)),asm.get("testmap.tmx", TiledMap.class));
+		currLevel = new Level(new Player(new Rectangle(0, 0, 32, 32)),asm.get("testmap.tmx", TiledMap.class));
 		Gdx.input.setInputProcessor(currLevel);
 	}
 	

@@ -11,8 +11,8 @@ public abstract class Entity extends CollidableObject {
 	protected float speed;
 	protected float renderX, renderY;
 	
-	public Entity(Rectangle rect, Texture texture) {
-		super(rect, texture);
+	public Entity(Rectangle rect) {
+		super(rect);
 		direction = new Vector2(0, 0);
 		speed = 375;
 	}
